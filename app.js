@@ -2,9 +2,10 @@ const express = require('express')
 const logger = require('morgan')
 const cors = require('cors')
 const authRouter = require('./routes/api/authRoutes')
+const transactions = require('./routes/api/transactions')
 
 const app = express()
-require("dotenv").config();
+require('dotenv').config()
 
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short'
 
@@ -14,6 +15,7 @@ app.use(express.static('public'))
 app.use(express.json())
 
 app.use('/api/auth', authRouter)
+app.use('/api/transactions', transactions)
 
 app.use((req, res) => {
   res.status(404).json({ message: 'Not found' })

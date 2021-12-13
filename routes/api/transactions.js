@@ -1,19 +1,18 @@
 const express = require('express')
-// const { ctrl } = require('../../controllers')
-// const { validation, authenticate, asyncTryCatch } = require('../../middleware')
+const { ctrl } = require('../../controllers')
+const { asyncTryCatch } = require('../../middlewares') //validation, authenticate
 // const { schema, schemaFavorite } = require('../../model/contact')
 const router = express.Router()
 
 // router.get('/', authenticate, asyncTryCatch(ctrl.getAll))
 
 // router.get('/:contactId', authenticate, asyncTryCatch(ctrl.getById))
-
-// router.post(
-//   '/',
-//   authenticate,
-//   validation(schema),
-//   asyncTryCatch(ctrl.addContacts)
-// )
+router.post(
+  '/income',
+  asyncTryCatch(ctrl.addIncome)
+  //   authenticate,
+  //   validation(schema),
+)
 
 // router.put(
 //   '/:contactId',

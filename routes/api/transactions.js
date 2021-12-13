@@ -2,7 +2,7 @@ const express = require('express')
 const { ctrl } = require('../../controllers')
 const { errorHandler } = require('../../helpers')
 const { validationWrapper, authenticateUser } = require('../../middlewares')
-const { schema } = require('../../model')
+const schema = require('../../middlewares/schemaIncome')
 const router = express.Router()
 
 router.get('/', authenticateUser, errorHandler(ctrl.getAll))

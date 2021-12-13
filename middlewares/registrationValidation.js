@@ -8,8 +8,7 @@ const registrationValidation = (req, res, next) => {
           allow: ['com', 'net', 'ru', 'ua']
         }
       }).required(),
-      password: Joi.string().min(3).max(20).required(),
-      avatarURL: Joi.string()
+      password: Joi.string().min(3).max(20).required()
     })
   
     const validationResult = schema.validate(req.body)

@@ -27,6 +27,7 @@ const userSchema = mongoose.Schema({
 userSchema.pre('save', async function () {
     if(this.isNew || this.isModified) {
         this.password = await bcrypt.hash(this.password, bcrypt.genSaltSync(10))
+        this.avatarURL = `https://eu.ui-avatars.com/api/?name=${this.email}.com&length=1&rounded=true`
     }
     
 })

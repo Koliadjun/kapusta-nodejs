@@ -1,26 +1,23 @@
 const express = require('express')
 const { ctrl } = require('../../controllers')
-const {
-  asyncTryCatch,
-  validation,
-  authenticateUser,
-} = require('../../middlewares')
+const { errorHandler } = require('../../helpers')
+const { validation, authenticateUser } = require('../../middlewares')
 const { schema } = require('../../model')
 const router = express.Router()
 
-router.get('/', authenticateUser, asyncTryCatch(ctrl.getAll))
+router.get('/', authenticateUser, errorHandler(ctrl.getAll))
 
 router.post(
   '/income',
   authenticateUser,
   validation(schema),
-  asyncTryCatch(ctrl.addTransaction)
+  errorHandler(ctrl.addTransaction)
 )
 router.post(
   '/spend',
   authenticateUser,
   validation(schema),
-  asyncTryCatch(ctrl.addTransaction)
+  errorHandler(ctrl.addTransaction)
 )
 
 module.exports = router

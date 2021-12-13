@@ -3,6 +3,7 @@ const { loginValidation } = require('./loginValidation')
 const { existenceCheck } = require('./existenceCheck')
 const { authenticateUser } = require('./authenticateUser')
 const asyncTryCatch = require('./asyncTryCatch')
+const validation = require('./validation')
 
 module.exports = {
   registrationValidation,
@@ -10,4 +11,5 @@ module.exports = {
   existenceCheck,
   authenticateUser,
   asyncTryCatch,
+  validation,
 }

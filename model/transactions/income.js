@@ -3,12 +3,15 @@ const Joi = require('joi')
 
 const incomeSchema = Schema(
   {
-    email: {
-      type: String,
-    },
     income: {
       type: String,
+      default: '0',
       required: [true, 'Set income for transation'],
+    },
+    spend: {
+      type: String,
+      default: '0',
+      required: [true, 'Set spend for transation'],
     },
     date: {
       type: String,
@@ -16,19 +19,14 @@ const incomeSchema = Schema(
     },
     category: {
       type: String,
-      required: [true, 'Set category for transation'],
+      required: [false, 'Set category for transation'],
+      default: '-empty-',
     },
     description: {
       type: String,
       required: [false, 'Set description for transation'],
+      default: '-empty-',
     },
-    // name: {
-    //   type: String,
-    //   required: [true, 'Set name for contact'],
-    // },
-    // phone: {
-    //   type: String,
-    // },
     negative: {
       type: Boolean,
       required: [true],
@@ -41,12 +39,15 @@ const incomeSchema = Schema(
   { versionKey: false, timestamps: true }
 )
 const schema = Joi.object({
-  income: Joi.string().min(3).max(30).required(),
-  email: Joi.string()
-    .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
-    .required(),
+  // email: Joi.string()
+  //   .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
+  //   .required(),
+  income: Joi.string().min(1).max(30),
+  spend: Joi.string().min(1).max(30),
+  date: Joi.string(),
   negative: Joi.boolean().required(),
-  category: Joi.string().required(),
+  category: Joi.string(),
+  description: Joi.string(),
 })
 
 const Income = model('transactions', incomeSchema)
@@ -54,5 +55,4 @@ const Income = model('transactions', incomeSchema)
 module.exports = {
   Income,
   schema,
-  //   schemaFavorite,
 }

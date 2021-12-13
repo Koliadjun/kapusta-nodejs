@@ -1,3 +1,4 @@
 const addIncome = require('./addIncome')
+const getAll = require('./getAll')
 
-module.exports = { addIncome }
+module.exports = { getAll, addIncome }

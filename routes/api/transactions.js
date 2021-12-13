@@ -1,17 +1,27 @@
 const express = require('express')
 const { ctrl } = require('../../controllers')
-const { asyncTryCatch } = require('../../middlewares') //validation, authenticate
-// const { schema, schemaFavorite } = require('../../model/contact')
+const {
+  asyncTryCatch,
+  validation,
+  authenticateUser,
+} = require('../../middlewares')
+const { schema } = require('../../model')
 const router = express.Router()
 
-// router.get('/', authenticate, asyncTryCatch(ctrl.getAll))
+router.get('/', authenticateUser, asyncTryCatch(ctrl.getAll))
 
 // router.get('/:contactId', authenticate, asyncTryCatch(ctrl.getById))
 router.post(
   '/income',
+  authenticateUser,
+  validation(schema),
   asyncTryCatch(ctrl.addIncome)
-  //   authenticate,
-  //   validation(schema),
+)
+router.post(
+  '/spend',
+  authenticateUser,
+  validation(schema),
+  asyncTryCatch(ctrl.addIncome)
 )
 
 // router.put(

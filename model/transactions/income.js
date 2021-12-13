@@ -19,12 +19,12 @@ const incomeSchema = Schema(
     category: {
       type: String,
       required: [false, 'Set category for transation'],
-      default: '-empty-',
+      default: null,
     },
     description: {
       type: String,
       required: [false, 'Set description for transation'],
-      default: '-empty-',
+      default: null,
     },
     negative: {
       type: Boolean,

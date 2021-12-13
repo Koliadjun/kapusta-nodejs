@@ -15,13 +15,13 @@ router.post(
   '/income',
   authenticateUser,
   validation(schema),
-  asyncTryCatch(ctrl.addIncome)
+  asyncTryCatch(ctrl.addTransaction)
 )
 router.post(
   '/spend',
   authenticateUser,
   validation(schema),
-  asyncTryCatch(ctrl.addIncome)
+  asyncTryCatch(ctrl.addTransaction)
 )
 
 // router.put(

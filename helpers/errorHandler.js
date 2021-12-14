@@ -4,5 +4,5 @@ const errorHandler = (controller) => {
   }
 }
 module.exports = {
-  errorHandler
+  errorHandler,
 }

@@ -3,9 +3,7 @@ const { Income } = require('../../model')
 
 const deleteById = async (req, res) => {
   const { id } = req.params
-  console.log(id)
   const result = await Income.findByIdAndRemove(id)
-  console.log(result)
 
   if (!result) {
     throw new NotFound(`Not found id = ${id}`)

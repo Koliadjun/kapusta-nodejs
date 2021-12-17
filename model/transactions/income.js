@@ -2,15 +2,10 @@ const { Schema, model } = require('mongoose')
 
 const incomeSchema = Schema(
   {
-    income: {
+    sum: {
       type: String,
       default: '0',
       required: [true, 'Set income for transation'],
-    },
-    spend: {
-      type: String,
-      default: '0',
-      required: [true, 'Set spend for transation'],
     },
     date: {
       type: String,

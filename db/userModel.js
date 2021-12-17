@@ -9,9 +9,13 @@ const userSchema = mongoose.Schema({
     },
     password: {
         type: String,
-        required: [true, 'Password is required'],
+        default: 'google'
     },
     token: {
+        type: String,
+        default: null,
+    },
+    name: {
         type: String,
         default: null,
     },
@@ -24,17 +28,20 @@ const userSchema = mongoose.Schema({
     },
     verificationToken: {
         type: String,
-        required: [true, 'Verify token is required']
+        default: null
     },
     verify: {
         type: Boolean,
-        default: false
+        default: true
   }
 })
 
 userSchema.pre('save', async function () {
     if(this.isNew || this.isModified) {
-        this.password = await bcrypt.hash(this.password, bcrypt.genSaltSync(10))
+        if(this.password !== 'google') {
+            this.password = await bcrypt.hash(this.password, bcrypt.genSaltSync(10))
+            this.verify = false
+        }
         this.avatarURL = `https://eu.ui-avatars.com/api/?name=${this.email}.com&length=1&rounded=true`
     }
     

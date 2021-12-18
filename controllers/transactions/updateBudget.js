@@ -1,11 +1,11 @@
 const { UserModel } = require('../../db/userModel')
 
 const updateBudget = async (req, res) => {
-  const { id } = req.params
   const { budget } = req.body
+  const { token } = req.user
 
-  const result = await UserModel.findByIdAndUpdate(
-    id,
+  const result = await UserModel.findOneAndUpdate(
+    { token: token },
     { budget },
     { new: true }
   )

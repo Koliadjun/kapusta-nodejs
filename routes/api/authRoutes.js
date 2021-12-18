@@ -25,7 +25,7 @@ authRouter.post('/login', loginValidation, errorHandler(loginController))
 authRouter.get('/logout', authenticateUser, logoutController)
 authRouter.get('/verify/:verificationToken', errorHandler(verifyUserController))
 authRouter.patch(
-  '/:id/budget',
+  '/budget',
   authenticateUser,
   bugetValidation,
   errorHandler(transactions.updateBudget)

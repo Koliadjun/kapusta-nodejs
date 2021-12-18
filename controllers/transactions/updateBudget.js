@@ -2,7 +2,6 @@ const { UserModel } = require('../../db/userModel')
 
 const updateBudget = async (req, res) => {
   const { id } = req.params
-  console.log(id)
   const { budget } = req.body
 
   const result = await UserModel.findByIdAndUpdate(

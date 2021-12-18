@@ -3,13 +3,16 @@ const {
   registrationValidation,
   loginValidation,
   authenticateUser,
+  bugetValidation,
 } = require('../../middlewares')
+const schema = require('../../middlewares/')
 const authRouter = express.Router()
 const {
   registrationController,
   loginController,
   logoutController,
   verifyUserController,
+  transactions,
 } = require('../../controllers')
 const { errorHandler } = require('../../helpers')
 
@@ -24,8 +27,8 @@ authRouter.get('/verify/:verificationToken', errorHandler(verifyUserController))
 authRouter.patch(
   '/:id/budget',
   authenticateUser,
-  //   validation(schemaFavorite),
-  errorHandler()
+  bugetValidation,
+  errorHandler(transactions.updateBudget)
 )
 
 module.exports = authRouter

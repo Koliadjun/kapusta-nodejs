@@ -11,6 +11,21 @@ const incomeSchema = Schema(
       type: String,
       default: new Date().toISOString().slice(0, 10),
     },
+    year: {
+      type: Number,
+      required: [true],
+      default: null,
+    },
+    month: {
+      type: Number,
+      required: [true],
+      default: null,
+    },
+    day: {
+      type: Number,
+      required: [true],
+      default: null,
+    },
     category: {
       type: String,
       required: [false, 'Set category for transation'],

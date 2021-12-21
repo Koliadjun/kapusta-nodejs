@@ -43,6 +43,7 @@ const googleRedirect = async (req, res) => {
         );
     }
     const token = await googleLogin(user)
+    
     return res.redirect(
         `${process.env.FRONTEND_URL}token=${token}`
     );

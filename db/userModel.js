@@ -19,9 +19,13 @@ const userSchema = mongoose.Schema({
         type: String,
         default: null,
     },
-    budget: {
+    initialBalance: {
         type: Number,
         default: null
+    },
+    balanceIsSet: {
+        type: Boolean,
+        default: false
     },
     avatarURL: {
         type: String

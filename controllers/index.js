@@ -4,6 +4,7 @@ const { logoutController } = require('./auth/logoutController')
 const { verifyUserController } = require('./auth/verifyUserController')
 const { googleAuth } = require('./auth/googleAuth')
 const { googleRedirect } = require('./auth/googleRedirect')
+const { currentController } = require('./auth/currentController')
 
 const transactions = require('./transactions')
 
@@ -14,5 +15,6 @@ module.exports = {
   verifyUserController,
   googleAuth,
   googleRedirect,
+  currentController,
   transactions,
 }

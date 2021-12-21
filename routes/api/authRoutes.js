@@ -11,7 +11,8 @@ const {
     logoutController,
     verifyUserController,
     googleAuth,
-    googleRedirect
+    googleRedirect,
+    currentController
 } = require('../../controllers')
 const {
     errorHandler
@@ -23,5 +24,6 @@ authRouter.get('/logout', authenticateUser, logoutController)
 authRouter.get('/verify/:verificationToken', errorHandler(verifyUserController))
 authRouter.get("/google", errorHandler(googleAuth));
 authRouter.get("/google-redirect", errorHandler(googleRedirect));
+authRouter.get("/current", errorHandler(currentController));
 
 module.exports = authRouter

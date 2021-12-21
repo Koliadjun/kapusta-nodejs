@@ -8,10 +8,12 @@ const { nanoid } = require('nanoid')
   
 const registration = async (email, password) => {
   const verificationToken = nanoid()
+  const name = email.split('@')[0]
   const newUser = new UserModel({
     email,
     password,
-    verificationToken
+    verificationToken,
+    name
   })
   const existenceCheck = await UserModel.findOne({
     email

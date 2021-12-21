@@ -5,6 +5,8 @@ const { login } = require('./auth/login')
 const { Income } = require('./transactions/income')
 
 const { googleLogin } = require('./auth/googleLogin')
+const { current } = require('./auth/current')
+
 
 
 module.exports = {
@@ -13,5 +15,6 @@ module.exports = {
   googleRegistration,
   googleLogin,
   Income,
+  current
 }
 

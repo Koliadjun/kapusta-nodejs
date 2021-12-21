@@ -16,7 +16,7 @@ const registration = async (email, password) => {
     name
   })
   const existenceCheck = await UserModel.findOne({
-    email
+    email: email.toLowerCase()
   })
 
   if (!existenceCheck) {

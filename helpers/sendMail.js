@@ -6,7 +6,7 @@ const sendMail = async (email, verificationToken) => {
   const mailMarkup = `<p>Hello there! Please verify your email by clicking that button!</p> <button type="button"><a href="http://localhost:${process.env.PORT}/api/auth/verify/${verificationToken}">BUTTON</a></button>`
   const msg = {
     to: email,
-    from: 'koliadjun@gmail.com',
+    from: 'bogdank208@gmail.com',
     subject: 'Please verify email!',
     html: mailMarkup
   }

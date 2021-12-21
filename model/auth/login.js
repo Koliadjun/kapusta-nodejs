@@ -17,9 +17,9 @@ const login = async (email, password) => {
     budget: user.budget
   }, process.env.SECRET_KEY, {expiresIn: '2h'})
 
-  await UserModel.findByIdAndUpdate(user._id, {token})
+  const result = await UserModel.findByIdAndUpdate(user._id, { token }, { new: true })
 
-  return token
+  return result
 }
 
 module.exports = {

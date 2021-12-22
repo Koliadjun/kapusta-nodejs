@@ -7,16 +7,16 @@ const current = async (token) => {
     console.log(_id)
     const user = await UserModel.findById(_id)
     if (!user) {
-      throw new Unauthorized('No such user!')
+        throw new Unauthorized('No such user!')
     }
-    const userData = {
-        email: user.email,
-        name: user.name,
-        budget: user.budget,
-        avatarURL: user.avatarURL,
-        token: user.token
-    }
-    return userData
+    // const userData = {
+    //     email: user.email,
+    //     name: user.name,
+    //     budget: user.budget,
+    //     avatarURL: user.avatarURL,
+    //     token: user.token
+    // }
+    return user
 }
 
 module.exports = {

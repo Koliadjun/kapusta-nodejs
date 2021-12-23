@@ -6,7 +6,7 @@ const updateBudget = async (req, res) => {
 
   const result = await UserModel.findOneAndUpdate(
     { token: token },
-    { initialBalance },
+    { initialBalance, balanceIsSet: true },
     { new: true }
   )
 

@@ -1,16 +1,16 @@
 const { UserModel } = require('../../db/userModel')
 
 const updateBudget = async (req, res) => {
-  const { budget } = req.body
+  const { initialBalance } = req.body
   const { token } = req.user
 
   const result = await UserModel.findOneAndUpdate(
     { token: token },
-    { budget },
+    { initialBalance, balanceIsSet: true },
     { new: true }
   )
 
-  if (!result || budget === undefined) {
+  if (!result || initialBalance === undefined) {
     res.status(400).json({ message: 'missing field "budget"' })
   }
 

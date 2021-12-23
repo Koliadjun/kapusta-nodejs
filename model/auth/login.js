@@ -4,7 +4,8 @@ const bcrypt = require('bcryptjs')
 const jsonwebtoken = require('jsonwebtoken')
 
 const login = async (email, password) => {
-  const user = await UserModel.findOne({ email })
+
+  const user = await UserModel.findOne({ email: email.toLowerCase() })
   if (!user) {
     throw new Unauthorized('Credentials are wrong')
   }
@@ -15,7 +16,7 @@ const login = async (email, password) => {
     _id: user._id,
     email: user.email,
     budget: user.budget
-  }, process.env.SECRET_KEY, {expiresIn: '2h'})
+  }, process.env.SECRET_KEY, { expiresIn: '2h' })
 
   const result = await UserModel.findByIdAndUpdate(user._id, { token }, { new: true })
 
@@ -23,5 +24,5 @@ const login = async (email, password) => {
 }
 
 module.exports = {
-    login
+  login
 }

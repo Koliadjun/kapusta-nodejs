@@ -2,7 +2,7 @@ const Joi = require('joi')
 
 const bugetValidation = (req, res, next) => {
   const schema = Joi.object({
-    budget: Joi.string(),
+    initialBalance: Joi.number(),
   })
 
   const validationResult = schema.validate(req.body)

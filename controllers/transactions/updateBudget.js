@@ -10,7 +10,7 @@ const updateBudget = async (req, res) => {
     { new: true }
   )
 
-  if (!result || budget === undefined) {
+  if (!result || initialBalance === undefined) {
     res.status(400).json({ message: 'missing field "budget"' })
   }
 

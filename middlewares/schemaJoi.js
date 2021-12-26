@@ -1,7 +1,7 @@
 const Joi = require('joi')
 
 const schema = Joi.object({
-  sum: Joi.number().min(1).max(30),
+  sum: Joi.number(),
   date: Joi.string(),
   year: Joi.number(),
   month: Joi.number(),

@@ -3,7 +3,7 @@ const { Schema, model } = require('mongoose')
 const incomeSchema = Schema(
   {
     sum: {
-      type: Number,
+      type: Schema.Types.Decimal128,
       default: '0',
       required: [true, 'Set income for transation'],
     },

@@ -3,7 +3,7 @@ const { Schema, model } = require('mongoose')
 const incomeSchema = Schema(
   {
     sum: {
-      type: String,
+      type: Number,
       default: '0',
       required: [true, 'Set income for transation'],
     },

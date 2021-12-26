@@ -11,7 +11,7 @@ const authenticateUser = async (req, res, next) => {
     try {
       const { _id } = await jsonwebtoken.verify(token, process.env.SECRET_KEY)
       const user = await UserModel.findById(_id)
-      if (!user || user.token !== token) {
+      if (!user) {
         throw new Unauthorized('Not authorized')
       }
       req.user = user

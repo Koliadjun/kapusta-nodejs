@@ -1,0 +1,602 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "2.0.2",
+    "title": "Swagger test",
+    "description": "Showing off swagger-ui-express",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "servers": [{ "url": "https://kapusta-api-iteam.herokuapp.com" }],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authorization endpoints"
+    },
+    {
+      "name": "Transactions",
+      "description": "Transactions endpoints"
+    }
+  ],
+
+
+  "paths": {
+    "/api/auth/registration": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User registration",
+        "requestBody": {
+          "description": "Registration's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegistrationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "409": {
+            "description": "User already exists",
+            "content": {}
+          },
+          "500": {
+            "description": "SendGrid error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Login existed user - returns user's data with token",
+        "requestBody": {
+          "description": "Registration's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "401": {
+            "description": "Credentials are wrong",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/auth/verify/{verificationToken}": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "verifies user's mail",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "verificationToken",
+            "required": true,
+            "type": "string",
+            "description": "user's verification token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerificationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "user was not found or you*ve already verified your email",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/auth/google": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Google authentication. If you do only front-end - only for login, if either backend and frontend - for registration and login",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Uri is not allowed",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/auth/current": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Fetches current user with token saved in LS",
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "401": {
+            "description": "invalid token, no token provided or user doesn't exist",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/auth/logout": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Logout",
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "successfully logged out"
+          },
+          "401": {
+            "description": "invalid token, no token provided or user is not logged in",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/auth/budget": {
+      "patch": {
+        "tags": ["Auth"],
+        "summary": "set initial balance",
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Budget's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BudgetRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "balance set"
+          },
+          "401": {
+            "description": "invalid token, no token provided or user is not logged in",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/transactions/income": {
+      "post": {
+        "tags": ["Transactions"],
+        "summary": "add transaction",
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "transaction's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransactionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)"
+          },
+          "401": {
+            "description": "invalid token, no token provided or user doesn't exist",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/transactions": {
+      "get": {
+        "tags": ["Transactions"],
+        "summary": "get user's transaction",
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "invalid token, no token provided or user doesn't exist",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/transactions/{id}": {
+      "delete": {
+        "tags": ["Transactions"],
+        "summary": "delete user's transaction",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "description": "transaction's id"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful succes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteTransactionResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "invalid token, no token provided or user doesn't exist",
+            "content": {}
+          }
+        }
+      }
+    }
+  },
+
+
+
+  "components": {
+    "schemas": {
+      "RegistrationRequest": {
+        "type": "object",
+        "required": ["email"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          }
+        }
+      },
+      "RegistrationResponse": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "userId": {
+            "type": "string",
+            "description": "User's id",
+            "example": "45454548721"
+          }
+        }
+      },
+      "LoginRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "items": {
+          "type": "object",
+          "properties": {
+            "user": {
+              "type": "object",
+              "description": "User's data"
+            }
+          }
+        }
+      },
+      "VerificationResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "confirmation of verification",
+            "example":  "Verification successful"
+          }
+        }
+      },
+      "BudgetRequest": {
+        "type": "object",
+        "required": ["initialBalance"],
+        "properties": {
+          "initialBalance": {
+            "type": "integer",
+            "description": "balance input",
+            "example": "123"
+          }
+        }
+      },
+      "BudgetResponse": {
+        "type": "object",
+        "items": {
+          "type": "object",
+          "properties": {
+            "user": {
+              "type": "object",
+              "description": "User's data"
+            }
+          }
+        }
+      },
+      "TransactionRequest": {
+        "type": "object",
+        "required": ["sum", "year", "month", "day", "negative"],
+        "properties": {
+          "sum": {
+            "type": "string",
+            "description": "sum input",
+            "example": "123"
+          },
+          "year": {
+            "type": "integer",
+            "description": "year input",
+            "example": "2020"
+          },
+          "month": {
+            "type": "integer",
+            "description": "month input",
+            "example": "12"
+          },
+          "day": {
+            "type": "integer",
+            "description": "day input",
+            "example": "23"
+          },
+          "negative": {
+            "type": "boolean",
+            "description": "negative input",
+            "example": "false"
+          },
+          "data": {
+            "type": "integer",
+            "description": "data input",
+            "example": "2021-12-23"
+          },
+          "category": {
+            "type": "string",
+            "description": "category input",
+            "example": "products"
+          },
+          "description": {
+            "type": "string",
+            "description": "description input",
+            "example": "chicken, guns, good mood"
+          }
+        }
+      },
+      "TransactionResponse": {
+        "type": "object",
+        "properties": {
+          "sum": {
+            "type": "string",
+            "description": "sum input",
+            "example": "123"
+          },
+          "year": {
+            "type": "integer",
+            "description": "year input",
+            "example": "2020"
+          },
+          "month": {
+            "type": "integer",
+            "description": "month input",
+            "example": "12"
+          },
+          "day": {
+            "type": "integer",
+            "description": "day input",
+            "example": "23"
+          },
+          "negative": {
+            "type": "boolean",
+            "description": "negative input",
+            "example": "false"
+          },
+          "data": {
+            "type": "integer",
+            "description": "data input",
+            "example": "2021-12-23"
+          },
+          "category": {
+            "type": "string",
+            "description": "category input",
+            "example": "products"
+          },
+          "description": {
+            "type": "string",
+            "description": "description input",
+            "example": "chicken, guns, good mood"
+          },
+          "owner": {
+            "type": "string",
+            "example": "61c4760d824a9aa4c3c5d203"
+          },
+          "_id": {
+            "type": "string",
+            "example": "61c49dcdc990a48811a4c677"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2021-12-23T16:03:25.729Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2021-12-23T16:03:25.729Z"
+          }
+        }
+      },
+      "TransactionsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "sum": {
+              "type": "string",
+              "description": "sum input",
+              "example": "123"
+            },
+            "year": {
+              "type": "integer",
+              "description": "year input",
+              "example": "2020"
+            },
+            "month": {
+              "type": "integer",
+              "description": "month input",
+              "example": "12"
+            },
+            "day": {
+              "type": "integer",
+              "description": "day input",
+              "example": "23"
+            },
+            "negative": {
+              "type": "boolean",
+              "description": "negative input",
+              "example": "false"
+            },
+            "data": {
+              "type": "integer",
+              "description": "data input",
+              "example": "2021-12-23"
+            },
+            "category": {
+              "type": "string",
+              "description": "category input",
+              "example": "products"
+            },
+            "description": {
+              "type": "string",
+              "description": "description input",
+              "example": "chicken, guns, good mood"
+            },
+            "owner": {
+              "type": "string",
+              "example": "61c4760d824a9aa4c3c5d203"
+            },
+            "_id": {
+              "type": "string",
+              "example": "61c49dcdc990a48811a4c677"
+            },
+            "createdAt": {
+              "type": "string",
+              "example": "2021-12-23T16:03:25.729Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "example": "2021-12-23T16:03:25.729Z"
+            }
+          }
+        }
+        
+      },
+      "DeleteTransactionResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "confirmation of delete",
+            "example":  "success"
+          },
+          "code": {
+            "type": "integer",
+            "example":  "200"
+          },
+          "message": {
+            "type": "string",
+            "description": "confirmation of delete",
+            "example":  "contact deleted"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+  
+}

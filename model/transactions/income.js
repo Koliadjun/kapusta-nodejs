@@ -47,7 +47,7 @@ const incomeSchema = Schema(
   },
   { versionKey: false, timestamps: true }
 )
-
+console.log('asd')
 const Income = model('transactions', incomeSchema)
 
 module.exports = { Income }
